@@ -1,5 +1,3 @@
-package wbs.pattern.proxy;
-
 import java.util.Stack;
 
 interface Coffee {
@@ -33,7 +31,7 @@ class CoffeeMachine implements Coffee {
 
 		if (coffeePot.isEmpty()) {
 			makeCoffee();
-			System.out.println("Making new coffee pot...");
+			System.out.println("Making new pot of coffee...");
 		}
 		coffeePot.pop();
 		System.out.println("Cups left in pot: " + coffeePot.size());
@@ -42,7 +40,7 @@ class CoffeeMachine implements Coffee {
 
 	private void makeCoffee() {
 		for (int i = 0; i < MAX_CUPS; i++) {
-			coffeePot.push(new Becher());
+			coffeePot.push(Becher.fill());
 		}
 
 	}
@@ -55,6 +53,10 @@ public class CoffeeProxyDemo {
 
 		Coffee coffeeBecher = Becher.fill();
 		System.out.println("Drinking...");
+		coffeeBecher.drink();
+		coffeeBecher.drink();
+		coffeeBecher.drink();
+		coffeeBecher.drink();
 		coffeeBecher.drink();
 		coffeeBecher.drink();
 		coffeeBecher.drink();
