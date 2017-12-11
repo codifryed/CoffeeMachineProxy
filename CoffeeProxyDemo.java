@@ -1,18 +1,21 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
+// Proxy Interface
 interface Coffee {
 	void drink();
 }
 
+// Proxy
 class Becher implements Coffee {
 
-	private static CoffeeMachine coffeeMachine;
+	private static final CoffeeMachine coffeeMachine = CoffeeMachine.getCoffeeMachine();
+
+	private Becher() {
+	}
 
 	@Override
 	public void drink() {
-		if (coffeeMachine == null) {
-			coffeeMachine = new CoffeeMachine();
-		}
 		coffeeMachine.drink();
 	}
 
@@ -22,16 +25,20 @@ class Becher implements Coffee {
 
 }
 
+// Singleton
 class CoffeeMachine implements Coffee {
-	private Stack<Coffee> coffeePot = new Stack<>();
-	private final int MAX_CUPS = 8;
+	private static final Deque<Coffee> coffeePot = new ArrayDeque<>();
+	private static final int MAX_CUPS = 8;
+
+	private CoffeeMachine() {
+	}
 
 	@Override
 	public void drink() {
 
 		if (coffeePot.isEmpty()) {
 			makeCoffee();
-			System.out.println("Making new pot of coffee...");
+			System.out.println("Making new coffee pot...");
 		}
 		coffeePot.pop();
 		System.out.println("Cups left in pot: " + coffeePot.size());
@@ -45,8 +52,17 @@ class CoffeeMachine implements Coffee {
 
 	}
 
+	public static CoffeeMachine getCoffeeMachine() {
+		return CoffeeMachineHolder.coffeeMachine;
+	}
+
+	private static class CoffeeMachineHolder {
+		static final CoffeeMachine coffeeMachine = new CoffeeMachine();
+	}
+
 }
 
+// Demo
 public class CoffeeProxyDemo {
 
 	public static void main(String[] args) {
