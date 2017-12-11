@@ -63,7 +63,7 @@ class CoffeeMachine implements Coffee {
 }
 
 // Demo
-public class CoffeeProxyDemo {
+public class CoffeeProxySingletonDemo {
 
 	public static void main(String[] args) {
 
